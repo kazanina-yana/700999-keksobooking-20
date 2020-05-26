@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Матвей Новиков](https://up.htmlacademy.ru/javascript/20/user/700999).
-* Наставник: `Неизвестно`.
+* Наставник: [Яна Казанина] (https://up.htmlacademy.ru/javascript/20/user/1275245).
 
 ---
 
