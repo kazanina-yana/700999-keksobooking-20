@@ -116,6 +116,18 @@ var getPhotos = function (array, block) {
   return block.appendChild(fragmentPhoto);
 };
 
+// функция фич
+var fragmentFeatures = document.createDocumentFragment();
+var createFeatures = function (featuresList) {
+  featuresList.forEach(function (feature) {
+    var featureElement = document.createElement('li');
+    featureElement.className = 'popup__feature popup__feature--' + feature;
+    fragmentFeatures.appendChild(featureElement);
+    return featureElement;
+  });
+  return fragmentFeatures;
+};
+
 // карточка объявления
 var cardTemplate = document.querySelector('#card')
   .content
@@ -135,21 +147,6 @@ var createMapCard = function (ad) {
   var mapCardFeatures = mapCardFeaturesContainer.children;
   var mapCardPhotosContainer = mapCard.querySelector('.popup__photos');
 
-  // иконки фич
-  for (var i = 0; i < mapCardFeatures.length; i++) {
-    var remove = true;
-    for (var j = 0; j < ad.offer.features.length; j++) {
-      var featureClass = 'popup__feature--' + ad.offer.features[j];
-      if (mapCardFeatures[i].classList.contains(featureClass)) {
-        remove = false;
-      }
-    }
-    if (remove) {
-      mapCardFeaturesContainer.removeChild(mapCardFeatures[i]);
-      i = i - 1;
-    }
-  }
-
   mapCardTitle.textContent = ad.offer.title;
   mapCardAdress.textContent = ad.offer.address;
   mapCardPrice.textContent = ad.offer.price + '₽/ночь';
@@ -158,10 +155,14 @@ var createMapCard = function (ad) {
   mapCardDescription.textContent = ad.offer.description;
   mapCardAvatar.src = ad.author.avatar;
 
-
   // фотографии
   getPhotos(ad.offer.photos, mapCardPhotosContainer);
-
+  // удаляем фичи из разметки
+  for (var i = mapCardFeatures.length; i--;) {
+    mapCardFeaturesContainer.removeChild(mapCardFeatures[i]);
+  }
+  // добавляем фичи из массива
+  mapCardFeaturesContainer.appendChild(createFeatures(ad.offer.features));
   // типы жилья
   switch (ad.offer.type) {
     case ('flat'):
@@ -177,7 +178,6 @@ var createMapCard = function (ad) {
       mapCardType.textContent = 'дворец';
       break;
   }
-
 
   return mapCard;
 };
