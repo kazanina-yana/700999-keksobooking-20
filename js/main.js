@@ -17,9 +17,9 @@ var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 var map = document.querySelector('.map');
 var mapPins = document.querySelector('.map__pins');
 
-/*
-var mapFilters = document.querySelector('.map__filters-container');
-*/
+var mapFilter = document.querySelector('.map__filters');
+var mapFilters = mapFilter.children;
+
 
 // случайное значениe массива
 var getRandomArrayIndex = function (array) {
@@ -208,6 +208,12 @@ var makeElementsDisabled = function (array) {
   }
 };
 
+var makeElementsAvailable = function (array) {
+  for (var i = 0; i < array.length; i++) {
+    array[i].removeAttribute('disabled');
+  }
+};
+
 makeElementsDisabled(mapFeatures);
 makeElementsDisabled(mapFiltersSelects);
 
@@ -215,10 +221,12 @@ makeElementsDisabled(mapFiltersSelects);
 var mapPinMain = document.querySelector('.map__pin--main');
 
 
-var makeElementActive = function () {
-  if (event.which === 1) {
+var makeElementActive = function (evt) {
+  if (evt.button === 0) {
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
+    makeElementsAvailable(mapFilters);
+    makeElementsAvailable(mapFeatures);
     renderAds();
   }
 };
@@ -233,7 +241,6 @@ mapPinMain.addEventListener('keydown', function (evt) {
   }
 });
 
-// адрес
 var adressInput = document.querySelector('#address');
 
 adressInput.value = (Math.round(MAP_PIN_WIDTH / 2 + mapPinMain.offsetLeft)) + ', ' + (Math.round(MAP_PIN_HEIHGT + mapPinMain.offsetTop));
@@ -339,8 +346,6 @@ adFormTitle.addEventListener('invalid', function () {
 adFormSubmit.addEventListener('click', function () {
   if (roomNumber.value === '1' && (roomCapacity.value > roomNumber.value || roomCapacity.value === '0')) {
     roomNumber.setCustomValidity('Для 1 гостя');
-  } else {
-    adFormSubmit.setCustomValidity('');
   }
 });
 
