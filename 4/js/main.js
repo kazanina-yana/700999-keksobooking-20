@@ -220,14 +220,17 @@ makeElementsDisabled(mapFiltersSelects);
 // главный пин, показываем карту по нажатию
 var mapPinMain = document.querySelector('.map__pin--main');
 
+var makePageActive = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  makeElementsAvailable(mapFilters);
+  makeElementsAvailable(mapFeatures);
+  renderAds();
+};
 
 var makeElementActive = function (evt) {
   if (evt.button === 0) {
-    map.classList.remove('map--faded');
-    adForm.classList.remove('ad-form--disabled');
-    makeElementsAvailable(mapFilters);
-    makeElementsAvailable(mapFeatures);
-    renderAds();
+    makePageActive();
   }
 };
 
@@ -235,9 +238,7 @@ mapPinMain.addEventListener('mousedown', makeElementActive);
 mapPinMain.addEventListener('keydown', function (evt) {
   evt.preventDefault();
   if (evt.key === 'Enter') {
-    map.classList.remove('map--faded');
-    adForm.classList.remove('ad-form--disabled');
-    renderAds();
+    makePageActive();
   }
 });
 
@@ -344,9 +345,7 @@ adFormTitle.addEventListener('invalid', function () {
 });
 
 adFormSubmit.addEventListener('click', function () {
-  if (roomNumber.value === '1' && (roomCapacity.value > roomNumber.value || roomCapacity.value === '0')) {
-    roomNumber.setCustomValidity('Для 1 гостя');
-  }
+  setRoomsToGuests();
 });
 
 
