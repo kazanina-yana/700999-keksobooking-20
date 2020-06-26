@@ -3,6 +3,8 @@
 var ADS_QUANTITY = 8;
 var AD_WIDTH = 50;
 var AD_HEIGHT = 70;
+var MAP_PIN_WIDTH = 65;
+var MAP_PIN_HEIHGT = 65;
 
 var titles = ['первый', 'второй', 'третий', 'четвертый', 'пятый', 'шестой', 'седьмой', 'восьмой'];
 var type = ['palace', 'flat', 'house', 'bungalo'];
@@ -14,9 +16,10 @@ var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 
 var map = document.querySelector('.map');
 var mapPins = document.querySelector('.map__pins');
-var mapFilters = document.querySelector('.map__filters-container');
 
-map.classList.remove('map--faded');
+/*
+var mapFilters = document.querySelector('.map__filters-container');
+*/
 
 // случайное значениe массива
 var getRandomArrayIndex = function (array) {
@@ -96,8 +99,7 @@ var renderAds = function () {
   mapPins.appendChild(fragment);
 };
 
-renderAds();
-
+/*
 // функция фото
 var getPhotos = function (array, block) {
   var fragmentPhoto = document.createDocumentFragment();
@@ -127,9 +129,10 @@ var createFeatures = function (featuresList) {
   });
   return fragmentFeatures;
 };
+*/
 
 // карточка объявления
-var cardTemplate = document.querySelector('#card')
+/* var cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.map__card');
 
@@ -182,10 +185,176 @@ var createMapCard = function (ad) {
   return mapCard;
 };
 
-var renderMapCard = function () {
-  var fragmentSecond = document.createDocumentFragment();
-  fragmentSecond.appendChild(createMapCard(ads[0]));
-  map.insertBefore(fragmentSecond, mapFilters);
+// var renderMapCard = function () {
+//   var fragmentSecond = document.createDocumentFragment();
+//   fragmentSecond.appendChild(createMapCard(ads[0]));
+//   map.insertBefore(fragmentSecond, mapFilters);
+// };
+
+// renderMapCard(); */
+
+
+// Личный проект: доверяй, но проверяй (часть 1)
+var mapFiltersSelects = document.querySelectorAll('.map__filter');
+var mapFeaturesFieldset = document.querySelector('.map__features');
+var mapFeatures = mapFeaturesFieldset.children;
+/*
+var adFormSubmit = document.querySelector('.ad-form__submit');
+*/
+
+// функция фичи недоступны
+var makeElementsDisabled = function (array) {
+  for (var i = 0; i < array.length; i++) {
+    array[i].setAttribute('disabled', true);
+  }
 };
 
-renderMapCard();
+makeElementsDisabled(mapFeatures);
+makeElementsDisabled(mapFiltersSelects);
+
+// главный пин, показываем карту по нажатию
+var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+
+var makeElementActive = function () {
+  if (event.which === 1) {
+    map.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+    renderAds();
+  }
+};
+
+mapPinMain.addEventListener('mousedown', makeElementActive);
+mapPinMain.addEventListener('keydown', function (evt) {
+  evt.preventDefault();
+  if (evt.key === 'Enter') {
+    map.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+    renderAds();
+  }
+});
+
+// адрес
+var adressInput = document.querySelector('#address');
+
+adressInput.value = (Math.round(MAP_PIN_WIDTH / 2 + mapPinMain.offsetLeft)) + ', ' + (Math.round(MAP_PIN_HEIHGT + mapPinMain.offsetTop));
+
+// валидация формы
+var adFormTitle = document.querySelector('#title');
+adFormTitle.setAttribute('required', true);
+
+var adFormType = document.querySelector('#type');
+
+var adFormPrice = document.querySelector('#price');
+adFormPrice.setAttribute('required', true);
+
+var setMinValue = function () {
+  switch (adFormType.value) {
+    case ('bungalo'):
+      adFormPrice.setAttribute('min', 0);
+      adFormPrice.setAttribute('placeholder', 0);
+      break;
+    case ('flat'):
+      adFormPrice.setAttribute('min', 1000);
+      adFormPrice.setAttribute('placeholder', 1000);
+      break;
+    case ('house'):
+      adFormPrice.setAttribute('min', 5000);
+      adFormPrice.setAttribute('placeholder', 5000);
+      break;
+    case ('palace'):
+      adFormPrice.setAttribute('min', 10000);
+      adFormPrice.setAttribute('placeholder', 10000);
+      break;
+  }
+};
+
+adFormType.addEventListener('change', function (evt) {
+  evt.preventDefault();
+  setMinValue();
+});
+
+// спальные места
+var roomNumber = document.querySelector('#room_number');
+var roomCapacity = document.querySelector('#capacity');
+
+var setRoomsToGuests = function () {
+  if (roomNumber.value === '1' &&
+  roomCapacity.value === '1') {
+    roomNumber.setCustomValidity('');
+  } else if (roomNumber.value === '2' &&
+  roomCapacity.value === '1' ||
+  roomCapacity.value === '2') {
+    roomNumber.setCustomValidity('');
+  } else if (roomNumber.value === '3' &&
+  roomCapacity.value === '1' ||
+  roomCapacity.value === '2' ||
+  roomCapacity.value === '3') {
+    roomNumber.setCustomValidity('');
+  } else if (roomNumber.value === '100' &&
+  roomCapacity.value === '0') {
+    roomNumber.setCustomValidity('');
+  } else {
+    roomNumber.setCustomValidity('Для 2 гостей или для 1 гостя');
+  }
+  // switch (roomNumber.value && roomCapacity.value) {
+  //   case ('1'):
+  //     roomNumber.setCustomValidity('Для 1 гостя');
+
+  //     break;
+  //   case ('2'):
+  //     roomNumber.setCustomValidity('Для 2 гостей или для 1 гостя');
+
+  //     break;
+  //   case ('3'):
+  //     roomNumber.setCustomValidity('Для 3 гостей, для 2 гостей или для 1 гостя');
+
+  //     break;
+  //   case ('100'):
+  //     roomNumber.setCustomValidity('не для гостей');
+
+  //     break;
+  //   default:
+  //     roomNumber.setCustomValidity('');
+  //     break;
+  // }
+};
+
+roomNumber.addEventListener('change', function (evt) {
+  evt.preventDefault();
+  setRoomsToGuests();
+});
+
+// кастомные сообщения валидации
+var checkAdFormTitleValidity = function () {
+  var validityStateObject = adFormTitle.validity;
+  if (validityStateObject.valueMissing) {
+    adFormTitle.setCustomValidity('Пожалуйста заполните это поле!');
+  } else if (validityStateObject.tooShort) {
+    adFormTitle.setCustomValidity('Описание должно быть не менее 30 символов');
+  } else {
+    adFormTitle.setCustomValidity('');
+  }
+};
+
+var checkAdFormPriceValidity = function () {
+  var validityStateObject = adFormPrice.validity;
+  if (validityStateObject.valueMissing) {
+    adFormPrice.setCustomValidity('Пожалуйста заполните это поле!');
+  } else if (validityStateObject.rangeUnderflow) {
+    adFormPrice.setCustomValidity('Стомость должна быть больше ' + adFormPrice.min + ' руб');
+  } else if (validityStateObject.rangeOverflow) {
+    adFormPrice.setCustomValidity('Стомость должна быть меньше ' + adFormPrice.max + ' руб');
+  } else {
+    adFormPrice.setCustomValidity('');
+  }
+};
+
+adFormPrice.addEventListener('invalid', function () {
+  checkAdFormPriceValidity();
+});
+
+adFormTitle.addEventListener('invalid', function () {
+  checkAdFormTitleValidity();
+});
+
