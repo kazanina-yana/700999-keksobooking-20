@@ -198,9 +198,8 @@ var createMapCard = function (ad) {
 var mapFiltersSelects = document.querySelectorAll('.map__filter');
 var mapFeaturesFieldset = document.querySelector('.map__features');
 var mapFeatures = mapFeaturesFieldset.children;
-/*
+var adForm = document.querySelector('.ad-form');
 var adFormSubmit = document.querySelector('.ad-form__submit');
-*/
 
 // функция фичи недоступны
 var makeElementsDisabled = function (array) {
@@ -214,7 +213,7 @@ makeElementsDisabled(mapFiltersSelects);
 
 // главный пин, показываем карту по нажатию
 var mapPinMain = document.querySelector('.map__pin--main');
-var adForm = document.querySelector('.ad-form');
+
 
 var makeElementActive = function () {
   if (event.which === 1) {
@@ -279,49 +278,28 @@ var roomNumber = document.querySelector('#room_number');
 var roomCapacity = document.querySelector('#capacity');
 
 var setRoomsToGuests = function () {
-  if (roomNumber.value === '1' &&
-  roomCapacity.value === '1') {
-    roomNumber.setCustomValidity('');
-  } else if (roomNumber.value === '2' &&
-  roomCapacity.value === '1' ||
-  roomCapacity.value === '2') {
-    roomNumber.setCustomValidity('');
-  } else if (roomNumber.value === '3' &&
-  roomCapacity.value === '1' ||
-  roomCapacity.value === '2' ||
-  roomCapacity.value === '3') {
-    roomNumber.setCustomValidity('');
-  } else if (roomNumber.value === '100' &&
-  roomCapacity.value === '0') {
-    roomNumber.setCustomValidity('');
-  } else {
+  if (roomNumber.value === '1' && (roomCapacity.value > roomNumber.value || roomCapacity.value === '0')) {
+    roomNumber.setCustomValidity('Для 1 гостя');
+  } else if (roomNumber.value === '2' && (roomCapacity.value > roomNumber.value || roomCapacity.value === '0')) {
     roomNumber.setCustomValidity('Для 2 гостей или для 1 гостя');
+  } else if (roomNumber.value === '3' && roomCapacity.value === '0') {
+    roomNumber.setCustomValidity('Для 3 гостей, для 2 гостей или для 1 гостя');
+  } else if (roomNumber.value === '100') {
+    roomNumber.setCustomValidity('Не для гостей');
+  } else {
+    roomNumber.setCustomValidity('');
   }
-  // switch (roomNumber.value && roomCapacity.value) {
-  //   case ('1'):
-  //     roomNumber.setCustomValidity('Для 1 гостя');
-
-  //     break;
-  //   case ('2'):
-  //     roomNumber.setCustomValidity('Для 2 гостей или для 1 гостя');
-
-  //     break;
-  //   case ('3'):
-  //     roomNumber.setCustomValidity('Для 3 гостей, для 2 гостей или для 1 гостя');
-
-  //     break;
-  //   case ('100'):
-  //     roomNumber.setCustomValidity('не для гостей');
-
-  //     break;
-  //   default:
-  //     roomNumber.setCustomValidity('');
-  //     break;
-  // }
 };
 
 roomNumber.addEventListener('change', function (evt) {
   evt.preventDefault();
+
+  setRoomsToGuests();
+});
+
+roomCapacity.addEventListener('change', function (evt) {
+  evt.preventDefault();
+
   setRoomsToGuests();
 });
 
@@ -357,4 +335,13 @@ adFormPrice.addEventListener('invalid', function () {
 adFormTitle.addEventListener('invalid', function () {
   checkAdFormTitleValidity();
 });
+
+adFormSubmit.addEventListener('click', function () {
+  if (roomNumber.value === '1' && (roomCapacity.value > roomNumber.value || roomCapacity.value === '0')) {
+    roomNumber.setCustomValidity('Для 1 гостя');
+  } else {
+    adFormSubmit.setCustomValidity('');
+  }
+});
+
 
