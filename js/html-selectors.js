@@ -3,30 +3,42 @@
 (function () {
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
-
   var mapPins = document.querySelector('.map__pins');
-  var mapPinsCollection = mapPins.children;
   var mapFilter = document.querySelector('.map__filters');
   var mapFilters = document.querySelector('.map__filters-container');
-  var mapCards = document.querySelectorAll('.map__card');
-
   var mapFiltersSelects = document.querySelectorAll('.map__filter');
   var mapFeaturesFieldset = document.querySelector('.map__features');
   var mapFeatures = mapFeaturesFieldset.children;
+
   var adForm = document.querySelector('.ad-form');
+  var adFormSubmit = document.querySelector('.ad-form__submit');
+  var adFormTitle = document.querySelector('#title');
+  var adFormType = document.querySelector('#type');
+  var adFormPrice = document.querySelector('#price');
+  var adressInput = document.querySelector('#address');
+  var roomNumber = document.querySelector('#room_number');
+  var roomCapacity = document.querySelector('#capacity');
+  var timeIn = document.querySelector('#timein');
+  var timeOut = document.querySelector('#timeout');
 
   window.htmlSelectors = {
     map: map,
     mapPinMain: mapPinMain,
     mapPins: mapPins,
-    mapPinsCollection: mapPinsCollection,
     mapFilter: mapFilter,
     mapFilters: mapFilters,
-    mapCards: mapCards,
-
     mapFiltersSelects: mapFiltersSelects,
     mapFeaturesFieldset: mapFeaturesFieldset,
     mapFeatures: mapFeatures,
-    adForm: adForm
+    adForm: adForm,
+    adFormSubmit: adFormSubmit,
+    adFormTitle: adFormTitle,
+    adFormType: adFormType,
+    adFormPrice: adFormPrice,
+    adressInput: adressInput,
+    roomNumber: roomNumber,
+    roomCapacity: roomCapacity,
+    timeIn: timeIn,
+    timeOut: timeOut
   };
 })();

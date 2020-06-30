@@ -26,11 +26,25 @@
     return array.slice(Math.round(Math.random() * array.length));
   };
 
+  var hideElements = function (elements) {
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].classList.add('hidden');
+    }
+  };
+
+  var showElements = function (elements) {
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].classList.remove('hidden');
+    }
+  };
+
   window.utils = {
     makeElementsDisabled: makeElementsDisabled,
     makeElementsAvailable: makeElementsAvailable,
     getRandomArrayIndex: getRandomArrayIndex,
     getRandomNumber: getRandomNumber,
-    getRandomArray: getRandomArray
+    getRandomArray: getRandomArray,
+    hideElements: hideElements,
+    showElements: showElements
   }
  })();
