@@ -1,10 +1,10 @@
 'use strict';
 
-window.pin = (function () {
+(function () {
   var renderMapCards = function () {
     var fragmentSecond = document.createDocumentFragment();
-    for (var j = 0; j < window.card.ads.length; j++) {
-      fragmentSecond.appendChild(window.map.createMapCard(window.card.ads[j]));
+    for (var j = 0; j < window.data.ads.length; j++) {
+      fragmentSecond.appendChild(window.map.createMapCard(window.data.ads[j]));
       window.htmlSelectors.map.insertBefore(fragmentSecond, window.htmlSelectors.mapFilters);
     }
   };
@@ -17,13 +17,13 @@ window.pin = (function () {
     }
   };
 
-  window.map.mapPinMain.addEventListener('mousedown', makeElementActive);
-  window.map.mapPinMain.addEventListener('keydown', function (evt) {
+  window.htmlSelectors.mapPinMain.addEventListener('mousedown', makeElementActive);
+  window.htmlSelectors.mapPinMain.addEventListener('keydown', function (evt) {
     evt.preventDefault();
     if (evt.key === 'Enter') {
       window.activePage.makePageActive();
     }
-    window.map.mapPinMain.removeEventListener('keydown', function () {
+    window.htmlSelectors.mapPinMain.removeEventListener('keydown', function () {
       evt.preventDefault();
       if (evt.key === 'Enter') {
         window.activePage.makePageActive();
@@ -31,7 +31,7 @@ window.pin = (function () {
     });
   });
 
-  return {
+  window.pin = {
     renderMapCards: renderMapCards,
     makeElementActive: makeElementActive
   };

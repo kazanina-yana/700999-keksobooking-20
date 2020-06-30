@@ -1,21 +1,21 @@
 'use strict';
 
-window.activePage = (function () {
+(function () {
   var makePageActive = function () {
-    window.map.mapPinMain.setAttribute('disabled', true);
+    window.htmlSelectors.mapPinMain.setAttribute('disabled', true);
 
     window.htmlSelectors.map.classList.remove('map--faded');
     window.htmlSelectors.adForm.classList.remove('ad-form--disabled');
-    window.disabledAvailable.makeElementsAvailable(window.htmlSelectors.mapFilters);
-    window.disabledAvailable.makeElementsAvailable(window.htmlSelectors.mapFeatures);
-    window.disabledAvailable.makeElementsAvailable(window.htmlSelectors.mapFilter);
+    window.utils.makeElementsAvailable(window.htmlSelectors.mapFilters);
+    window.utils.makeElementsAvailable(window.htmlSelectors.mapFeatures);
+    window.utils.makeElementsAvailable(window.htmlSelectors.mapFilter);
     window.map.renderAds();
 
-    window.openCloseCard.openCard();
-    window.openCloseCard.closeCard();
+    window.card.openCard();
+    window.card.closeCard();
   };
 
-  return {
+  window.activePage = {
     makePageActive: makePageActive
   };
 })();

@@ -1,7 +1,9 @@
 'use strict';
 
-window.htmlSelectors = (function () {
+(function () {
   var map = document.querySelector('.map');
+  var mapPinMain = document.querySelector('.map__pin--main');
+
   var mapPins = document.querySelector('.map__pins');
   var mapPinsCollection = mapPins.children;
   var mapFilter = document.querySelector('.map__filters');
@@ -13,8 +15,9 @@ window.htmlSelectors = (function () {
   var mapFeatures = mapFeaturesFieldset.children;
   var adForm = document.querySelector('.ad-form');
 
-  return {
+  window.htmlSelectors = {
     map: map,
+    mapPinMain: mapPinMain,
     mapPins: mapPins,
     mapPinsCollection: mapPinsCollection,
     mapFilter: mapFilter,

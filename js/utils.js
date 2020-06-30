@@ -1,7 +1,17 @@
 'use strict';
+ (function () {
+  var makeElementsDisabled = function (array) {
+    for (var i = 0; i < array.length; i++) {
+      array[i].setAttribute('disabled', true);
+    }
+  };
 
-window.randomFunction = (function () {
-  // случайное значениe массива
+  var makeElementsAvailable = function (array) {
+    for (var i = 0; i < array.length; i++) {
+      array[i].removeAttribute('disabled');
+    }
+  };
+
   var getRandomArrayIndex = function (array) {
     return array[Math.floor(Math.random() * array.length)];
   };
@@ -16,9 +26,11 @@ window.randomFunction = (function () {
     return array.slice(Math.round(Math.random() * array.length));
   };
 
-  return {
+  window.utils = {
+    makeElementsDisabled: makeElementsDisabled,
+    makeElementsAvailable: makeElementsAvailable,
     getRandomArrayIndex: getRandomArrayIndex,
     getRandomNumber: getRandomNumber,
     getRandomArray: getRandomArray
-  };
-})();
+  }
+ })();

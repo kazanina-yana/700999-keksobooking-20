@@ -1,6 +1,6 @@
 'use strict';
 
-window.form = (function () {
+(function () {
   var adFormSubmit = document.querySelector('.ad-form__submit');
 
   // валидация формы
@@ -127,9 +127,9 @@ window.form = (function () {
 
   var adressInput = document.querySelector('#address');
 
-  adressInput.value = (Math.round(window.data.MAP_PIN_WIDTH / 2 + window.map.mapPinMain.offsetLeft)) + ', ' + (Math.round(window.data.MAP_PIN_HEIHGT + window.map.mapPinMain.offsetTop));
+  adressInput.value = (Math.round(window.data.MAP_PIN_WIDTH / 2 + window.htmlSelectors.mapPinMain.offsetLeft)) + ', ' + (Math.round(window.data.MAP_PIN_HEIHGT + window.htmlSelectors.mapPinMain.offsetTop));
 
-  return {
+  window.form = {
     adFormTitle: adFormTitle,
     adFormType: adFormType,
     adFormPrice: adFormPrice,
