@@ -9,5 +9,5 @@
     mapPinsCollection: mapPinsCollection,
     closeButtons: closeButtons,
     mapCards: mapCards
-  }
+  };
 })();

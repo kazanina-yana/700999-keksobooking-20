@@ -3,18 +3,15 @@
 (function () {
   window.utils.makeElementsDisabled(window.htmlSelectors.mapFeatures);
   window.utils.makeElementsDisabled(window.htmlSelectors.mapFiltersSelects);
-
-  window.utils.hideElements(window.renderedSelectors.mapCards);
   window.utils.hideElements(window.renderedSelectors.mapPinsCollection);
+  window.utils.hideElements(window.renderedSelectors.mapCards);
 
-  var onClickOpenCard = function (element, data, test) {
+  var onClickOpenCard = function (element, data) {
     element.addEventListener('click', function () {
 
       data.classList.remove('hidden');
+      window.utils.makeElementsDisabled(window.renderedSelectors.mapPinsCollection);
 
-      if (test.data.length === 1) {
-        data.classList.add('hidden');
-      }
     });
   };
 

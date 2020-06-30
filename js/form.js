@@ -110,5 +110,5 @@
 
   window.htmlSelectors.adFormSubmit.addEventListener('click', function () {
     setRoomsToGuests();
-});
+  });
 })();

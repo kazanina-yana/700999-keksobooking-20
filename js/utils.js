@@ -1,5 +1,5 @@
 'use strict';
- (function () {
+(function () {
   var makeElementsDisabled = function (array) {
     for (var i = 0; i < array.length; i++) {
       array[i].setAttribute('disabled', true);
@@ -46,5 +46,5 @@
     getRandomArray: getRandomArray,
     hideElements: hideElements,
     showElements: showElements
-  }
- })();
+  };
+})();

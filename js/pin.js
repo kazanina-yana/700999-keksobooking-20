@@ -66,5 +66,5 @@
   window.pin = {
     ads: ads,
     renderAds: renderAds
-  }
+  };
 })();
