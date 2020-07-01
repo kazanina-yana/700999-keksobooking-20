@@ -50,6 +50,8 @@
     var mapCardFeatures = mapCardFeaturesContainer.children;
     var mapCardPhotosContainer = mapCard.querySelector('.popup__photos');
 
+    // var popupClose = mapCard.querySelector('.popup__close');
+
     mapCardTitle.textContent = ad.offer.title;
     mapCardAdress.textContent = ad.offer.address;
     mapCardPrice.textContent = ad.offer.price + '₽/ночь';
@@ -85,14 +87,32 @@
     return mapCard;
   };
 
-
-  var renderMapCards = function () {
-    var fragmentSecond = document.createDocumentFragment();
-    for (var i = 0; i < window.pin.ads.length; i++) {
-      fragmentSecond.appendChild(createMapCard(window.pin.ads[i]));
-      window.htmlSelectors.map.insertBefore(fragmentSecond, window.htmlSelectors.mapFilters);
+  var removeCard = function () {
+    if (window.htmlSelectors.map.querySelector('.map__card')) {
+      window.htmlSelectors.map.querySelector('.map__card').remove();
     }
   };
+  var renderMapCard = function (element) {
+    var fragmentSecond = document.createDocumentFragment();
+    fragmentSecond.appendChild(createMapCard(element));
 
-  renderMapCards();
+    window.htmlSelectors.map.insertBefore(fragmentSecond, window.htmlSelectors.mapFilters);
+
+    var popupClose = document.querySelector('.popup__close');
+
+    popupClose.addEventListener('click', function () {
+      removeCard();
+    });
+    document.addEventListener('keydown', function (evt) {
+      evt.preventDefault();
+      if (evt.key === 'Escape') {
+        removeCard();
+      }
+    });
+  };
+
+  window.card = {
+    renderMapCard: renderMapCard,
+    removeCard: removeCard
+  };
 })();
