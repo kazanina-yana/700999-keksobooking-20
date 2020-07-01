@@ -85,14 +85,31 @@
     return mapCard;
   };
 
+renderMapCard = function (element) {
+  var fragmentSecond = document.createDocumentFragment();
+  fragmentSecond.appendChild(createMapCard(element));
+}
 
   var renderMapCards = function () {
     var fragmentSecond = document.createDocumentFragment();
     for (var i = 0; i < window.pin.ads.length; i++) {
       fragmentSecond.appendChild(createMapCard(window.pin.ads[i]));
       window.htmlSelectors.map.insertBefore(fragmentSecond, window.htmlSelectors.mapFilters);
+
+      // window.pin.ads.forEach(function (item, index) {
+      //   item.addEventListener('click', function () {
+
+      //     //удалить прошлую карту
+      //     getPinCard(index); // здесь твой вызов - это не итоговый вариант, просто направление
+      //   });
+      // });
     }
   };
 
   renderMapCards();
+
+  window.card = {
+    renderMapCards: renderMapCards
+  }
+
 })();

@@ -8,7 +8,6 @@
 
   var onClickOpenCard = function (element, data) {
     element.addEventListener('click', function () {
-
       data.classList.remove('hidden');
       window.utils.makeElementsDisabled(window.renderedSelectors.mapPinsCollection);
 
