@@ -1,7 +1,10 @@
 'use strict';
 
 (function () {
-  window.htmlSelectors.adressInput.value = (Math.round(window.data.MAP_PIN_WIDTH / 2 + window.htmlSelectors.mapPinMain.offsetLeft)) + ', ' + (Math.round(window.data.MAP_PIN_HEIHGT + window.htmlSelectors.mapPinMain.offsetTop));
+  var locationX = Math.round(window.data.MAP_PIN_WIDTH / 2 + window.htmlSelectors.mapPinMain.offsetLeft);
+  var locationY = Math.round(window.data.MAP_PIN_HEIHGT + window.htmlSelectors.mapPinMain.offsetTop);
+
+  window.htmlSelectors.adressInput.value = locationX + ', ' + locationY;
 
   // валидация формы
   window.htmlSelectors.adFormTitle.setAttribute('required', true);
